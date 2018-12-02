@@ -18,13 +18,10 @@ int main()
 {
     PlagiarismCatcher myCatcher;
     string dir = string("sm_doc_set");
-    vector<string> files = vector<string>();
 
-    myCatcher.getdir(dir,files);
+    myCatcher.getdir(dir);
 
-    for (unsigned int i = 0;i < files.size();i++) {
-        cout << i << files[i] << endl;
-    }
+    myCatcher.printFiles();
     vector<string> v;
     fstream currentFile;
     string fileLoc = "D:\\Documents\\EE 312\\Labs\\Lab 8-Plagiarism Catcher\\cmake-build-debug\\sm_doc_set/" + files.at(2);

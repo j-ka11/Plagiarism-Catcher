@@ -16,8 +16,12 @@
 using namespace std;
 class PlagiarismCatcher{
 private:
+    vector<string> files;
 public:
-    int getdir (string dir, vector<string> &files);
+    vector<string> getFiles() const;
+    void setFiles(vector<string> sFile);
+    int getdir (string dir);
+    void printFiles();
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H
