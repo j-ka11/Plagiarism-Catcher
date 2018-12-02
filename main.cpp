@@ -40,23 +40,13 @@ int main()
     for (unsigned int i = 0;i < files.size();i++) {
         cout << i << files[i] << endl;
     }
-    string fname =  "C:\\Users\\chris_d0m8an5\\CLionProjects\\Cheaters\\cmake-build-debug\\sm_doc_set\\abf70402";
     vector<string> v;
     fstream currentFile;
-    currentFile.open(fname);
-    cout<<"file opened";
-
-    string word;
-    cout<<"word string created";
-
-    while(currentFile>>word) {
-        cout << "word found" << endl;
-
-        v.push_back(word);
-        cout << word << endl;
+    string fileLoc = "D:\\Documents\\EE 312\\Labs\\Lab 8-Plagiarism Catcher\\cmake-build-debug\\sm_doc_set/" + files.at(2);
+    currentFile.open(fileLoc);
+    if(currentFile.is_open()){
+        cout << "file opened" << endl;
     }
-
-        cout << "finishing";
         return 0;
 
 }
