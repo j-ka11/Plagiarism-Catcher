@@ -17,8 +17,10 @@ using namespace std;
 class PlagiarismCatcher{
 private:
     vector<string> files;
+    int breakSize;
 public:
     PlagiarismCatcher();
+    PlagiarismCatcher(int n);
     vector<string> getFiles() const;
     void setFiles(vector<string> sFile);
     int getdir (string dir);

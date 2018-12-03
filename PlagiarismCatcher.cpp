@@ -6,7 +6,10 @@
 using namespace std;
 
 PlagiarismCatcher::PlagiarismCatcher(){
-
+    breakSize=6;
+}
+PlagiarismCatcher::PlagiarismCatcher(int n){
+    breakSize=n;
 }
 
 int PlagiarismCatcher::getdir(string dir) {
@@ -45,7 +48,7 @@ void PlagiarismCatcher::printFiles() {
     }
 }
 int PlagiarismCatcher::printFileContent(string fName){
-    int fileIdx;
+    /*int fileIdx;
     bool foundFile = false;
     for(int i = 0;i < files.size();i++){
         if(fName == files.at(i)){
@@ -55,7 +58,7 @@ int PlagiarismCatcher::printFileContent(string fName){
     }
     if(!foundFile){
         return -1;
-    }else{
+    }else{*/
         fstream currentFile;
         string fileLoc = "D:\\Documents\\EE 312\\Labs\\Lab 8-Plagiarism Catcher\\cmake-build-debug\\sm_doc_set/" + fName;
         currentFile.open(fileLoc);
@@ -70,7 +73,7 @@ int PlagiarismCatcher::printFileContent(string fName){
             cout << word << endl;
         }
         return 0;
-    }
+    //}
 }
 
 string PlagiarismCatcher::removePunctuation(string word) {
@@ -80,4 +83,8 @@ string PlagiarismCatcher::removePunctuation(string word) {
         }
     }
     return word;
+}
+void PlagiarismCatcher::breakN()
+{
+
 }

@@ -16,6 +16,7 @@ using namespace std;
 
 int main()
 {
+    int n=6;
     PlagiarismCatcher myCatcher;
     string dir = string("sm_doc_set");
 
