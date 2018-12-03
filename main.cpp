@@ -22,13 +22,9 @@ int main()
     myCatcher.getdir(dir);
 
     myCatcher.printFiles();
-    vector<string> v;
-    fstream currentFile;
-    string fileLoc = "D:\\Documents\\EE 312\\Labs\\Lab 8-Plagiarism Catcher\\cmake-build-debug\\sm_doc_set/" + files.at(2);
-    currentFile.open(fileLoc);
-    if(currentFile.is_open()){
-        cout << "file opened" << endl;
-    }
+    string fName = "bef1121.txt";
+    myCatcher.printFileContent(fName);
+    //vector<string> v;
         return 0;
 
 }

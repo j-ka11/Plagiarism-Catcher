@@ -18,10 +18,12 @@ class PlagiarismCatcher{
 private:
     vector<string> files;
 public:
+    PlagiarismCatcher();
     vector<string> getFiles() const;
     void setFiles(vector<string> sFile);
     int getdir (string dir);
     void printFiles();
+    int printFileContent(string fName);
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H
