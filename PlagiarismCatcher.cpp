@@ -66,8 +66,18 @@ int PlagiarismCatcher::printFileContent(string fName){
         }
         string word;
         while(currentFile >> word){
+            word = removePunctuation(word);
             cout << word << endl;
-            return 0;
+        }
+        return 0;
+    }
+}
+
+string PlagiarismCatcher::removePunctuation(string word) {
+    for(int i = 0;i < word.length();i++){
+        if(((word[i] >= 33) && (word[i] <= 47)) | ((word[i] >= 58) && (word[i] <= 64))){
+            word.erase(word.begin() + i);
         }
     }
+    return word;
 }

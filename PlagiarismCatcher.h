@@ -24,6 +24,7 @@ public:
     int getdir (string dir);
     void printFiles();
     int printFileContent(string fName);
+    string removePunctuation(string word);
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H
