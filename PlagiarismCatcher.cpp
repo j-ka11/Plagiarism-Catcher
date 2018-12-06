@@ -78,13 +78,9 @@ int PlagiarismCatcher::printFileContent(string fName){
 
 string PlagiarismCatcher::removePunctuation(string word) {
     for(int i = 0;i < word.length();i++){
-        if(((word[i] >= 33) && (word[i] <= 47)) | ((word[i] >= 58) && (word[i] <= 64))){
+        if(((word[i] >= 33) && (word[i] <= 47)) | ((word[i] >= 58) && (word[i] <= 64)) | ((word[i] >= 91) && (word[i] <= 96)) | ((word[i] >= 123) && (word[i] <=127))){
             word.erase(word.begin() + i);
         }
     }
     return word;
-}
-void PlagiarismCatcher::breakN()
-{
-
 }
