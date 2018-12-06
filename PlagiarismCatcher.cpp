@@ -18,6 +18,23 @@ PlagiarismCatcher::PlagiarismCatcher(int N){
     n=N;
 }
 
+PlagiarismCatcher::~PlagiarismCatcher(){
+    for(int i = 0;i < 136631;i++){
+        deleteLinkedList(HashTable[i]);
+    }
+}
+
+void PlagiarismCatcher::deleteLinkedList(PlagiarismCatcher::Node *currentNode) {
+    if(currentNode == NULL){
+        return;
+    }else if(currentNode->next == NULL) {
+        delete currentNode;
+        return;
+    }else{
+        deleteLinkedList(currentNode->next);
+    }
+}
+
 int PlagiarismCatcher::getFilesSize() {
     return files.size();
 }
@@ -100,11 +117,13 @@ string PlagiarismCatcher::removePunctuation(string word) {
 
 int PlagiarismCatcher::hashFunction(string wordQueue){
     double functionValue = 0;
-    int functionIdx;
+    unsigned long functionIdx;
+    double moddingFactor = 1000003;
     for(double i = 0;i < wordQueue.size();i++){
-        functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(17, i);
+        functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(3, i);
     }
-    functionIdx = (int) functionValue;
+    functionIdx = (unsigned long) functionValue;
+    functionIdx = functionIdx % 136631;
     return functionIdx;
 }
 
@@ -137,4 +156,5 @@ void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
             current = current->next;
         }
     }
+    HashTable[tableidx] = myNode;
 }

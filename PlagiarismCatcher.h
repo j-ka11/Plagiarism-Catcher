@@ -29,10 +29,11 @@ private:
         Node* next;
     };
     vector<vector<int>> CollisonVector;
-    Node* HashTable[10903];
+    Node* HashTable[136631];
 public:
     PlagiarismCatcher();
     PlagiarismCatcher(int n);
+    ~PlagiarismCatcher();
     vector<string> getFiles() const;
     void setFiles(vector<string> sFile);
     int getdir (string dir);
@@ -43,6 +44,7 @@ public:
     void addFilestoHash();
     void addToTable(int tableidx, int fileidx, string phrase);
     int getFilesSize();
+    void deleteLinkedList(Node* currentNode);
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H

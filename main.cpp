@@ -29,6 +29,8 @@ int main()
         myCatcher.printFileContent(fName);
     }
     myCatcher.addFilestoHash();
+
+    //myCatcher.~PlagiarismCatcher();
     //vector<string> v;
         return 0;
 
