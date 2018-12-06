@@ -10,21 +10,25 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #include "PlagiarismCatcher.h"
+#include "HashTable.h"
 
 
 using namespace std;
 
 int main()
 {
-    int n=6;
-    PlagiarismCatcher myCatcher;
+    int N=6;
+    PlagiarismCatcher myCatcher(N);
     string dir = string("sm_doc_set");
 
     myCatcher.getdir(dir);
 
     myCatcher.printFiles();
     string fName = "bef1121.txt";
-    myCatcher.printFileContent(fName);
+    for(int i = 0;i < myCatcher.getFilesSize();i++) {
+        myCatcher.printFileContent(fName);
+    }
+    myCatcher.addFilestoHash();
     //vector<string> v;
         return 0;
 

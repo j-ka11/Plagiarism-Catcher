@@ -6,10 +6,20 @@
 using namespace std;
 
 PlagiarismCatcher::PlagiarismCatcher(){
-    breakSize=6;
+    n=6;
+    //initializing collision vector
+    for(int i = 0;i < files.size();i++){
+        for(int j = 0;j < files.size();j++){
+            CollisonVector.at(i).push_back(0);
+        }
+    }
 }
-PlagiarismCatcher::PlagiarismCatcher(int n){
-    breakSize=n;
+PlagiarismCatcher::PlagiarismCatcher(int N){
+    n=N;
+}
+
+int PlagiarismCatcher::getFilesSize() {
+    return files.size();
 }
 
 int PlagiarismCatcher::getdir(string dir) {
@@ -98,10 +108,10 @@ int PlagiarismCatcher::hashFunction(string wordQueue){
     return functionIdx;
 }
 
-void PlagiarismCatcher::addFilestoHash(int n) {
+void PlagiarismCatcher::addFilestoHash() {
     string phrase;
     for(int k = 0;k < files.size();k++) {
-        for (int i = 0; i < (wordFile.size() - n);) {
+        for (int i = 0; i < (wordFile.size() - this->n);) {
             for (int j = 0; j < n; j++) {
                 phrase = phrase + wordFile.at(i);
                 i++;
@@ -112,5 +122,19 @@ void PlagiarismCatcher::addFilestoHash(int n) {
 }
 
 void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
-
+    Node* myNode = new Node;
+    myNode->phrase=phrase;
+    myNode->fileIdx=fileidx;
+    myNode->tableIdx=tableidx;
+    myNode->next=NULL;
+    Node* current = HashTable[tableidx];
+    while(current != NULL){
+        if(current->next == NULL){
+            current->next = myNode;
+            return;
+        }else{
+            CollisonVector.at(fileidx).at(current->fileIdx)++;
+            current = current->next;
+        }
+    }
 }
