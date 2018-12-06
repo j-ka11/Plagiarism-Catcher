@@ -13,9 +13,23 @@ PlagiarismCatcher::PlagiarismCatcher(){
             CollisonVector.at(i).push_back(0);
         }
     }
+    //initializing hash table
+    for(int i = 0;i < 136631;i++){
+        HashTable[i] = NULL;
+    }
 }
 PlagiarismCatcher::PlagiarismCatcher(int N){
+
     n=N;
+    for(int i = 0;i < files.size();i++){
+        for(int j = 0;j < files.size();j++){
+            CollisonVector.at(i).push_back(0);
+        }
+    }
+    //initializing hash table
+    for(int i = 0;i < 136631;i++){
+        HashTable[i] = NULL;
+    }
 }
 
 PlagiarismCatcher::~PlagiarismCatcher(){
@@ -32,6 +46,7 @@ void PlagiarismCatcher::deleteLinkedList(PlagiarismCatcher::Node *currentNode) {
         return;
     }else{
         deleteLinkedList(currentNode->next);
+        currentNode->next = NULL;
     }
 }
 
@@ -74,7 +89,7 @@ void PlagiarismCatcher::printFiles() {
         cout << i << files[i] << endl;
     }
 }
-int PlagiarismCatcher::printFileContent(string fName){
+int PlagiarismCatcher::printFileContent(){
     /*int fileIdx;
     bool foundFile = false;
     for(int i = 0;i < files.size();i++){
@@ -86,20 +101,33 @@ int PlagiarismCatcher::printFileContent(string fName){
     if(!foundFile){
         return -1;
     }else{*/
+    for(int i = 2;i < files.size();i++) {
+        if(i == 10){
+            int stop = 0;
+        }
+        if(i == 20){
+            int stop = 0;
+        }
+        if(i == 25){
+            int stop = 0;
+        }
         fstream currentFile;
-        string fileLoc = "D:\\Documents\\EE 312\\Labs\\Lab 8-Plagiarism Catcher\\cmake-build-debug\\sm_doc_set/" + fName;
+        string fileLoc =
+                "D:\\Documents\\EE 312\\Labs\\Lab 8-Plagiarism Catcher\\cmake-build-debug\\sm_doc_set/" + files.at(i);
         currentFile.open(fileLoc);
-        if(currentFile.is_open()){
+        if (currentFile.is_open()) {
             cout << "file opened" << endl;
-        }else{
+        } else {
             cout << "file didn't open" << endl;
         }
         string word;
-        while(currentFile >> word){
+        while (currentFile >> word) {
             word = removePunctuation(word);
             wordFile.push_back(word);
             cout << word << endl;
         }
+        addFilestoHash();
+    }
         return 0;
     //}
 }
@@ -118,30 +146,46 @@ string PlagiarismCatcher::removePunctuation(string word) {
 int PlagiarismCatcher::hashFunction(string wordQueue){
     double functionValue = 0;
     unsigned long functionIdx;
-    double moddingFactor = 1000003;
+    unsigned long moddingFactor = 136631;
     for(double i = 0;i < wordQueue.size();i++){
         functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(3, i);
     }
     functionIdx = (unsigned long) functionValue;
-    functionIdx = functionIdx % 136631;
+    functionIdx = functionIdx % moddingFactor;
     return functionIdx;
 }
 
 void PlagiarismCatcher::addFilestoHash() {
     string phrase;
     for(int k = 0;k < files.size();k++) {
-        for (int i = 0; i < (wordFile.size() - this->n);) {
-            for (int j = 0; j < n; j++) {
-                phrase = phrase + wordFile.at(i);
+        for (int i = 0; i < (wordFile.size() - (this->n));) {
+            if(i == wordFile.size() - 7){
+                int stop = 0;
+            }
+            if((i + n) < wordFile.size()) {
+                for (int j = 0; j < n; j++) {
+                    phrase = phrase + wordFile.at(i);
+                    i++;
+                }
+                addToTable(hashFunction(phrase), k, phrase);
+                phrase = "";
+                i = i - (n - 1);
+            }else{
+                cout << "done with this file" << endl;
                 i++;
             }
-            addToTable(hashFunction(phrase), k, phrase);
         }
     }
 }
 
 void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
     Node* myNode = new Node;
+    if(phrase == "thereisareasonabledoubtin"){
+        int stop = 0;
+    }
+    if((tableidx < 0) | (tableidx > 136631)){
+        int stop = 0;
+    }
     myNode->phrase=phrase;
     myNode->fileIdx=fileidx;
     myNode->tableIdx=tableidx;
@@ -150,6 +194,7 @@ void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
     while(current != NULL){
         if(current->next == NULL){
             current->next = myNode;
+            HashTable[tableidx] = myNode;
             return;
         }else{
             CollisonVector.at(fileidx).at(current->fileIdx)++;

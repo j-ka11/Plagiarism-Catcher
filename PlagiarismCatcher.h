@@ -38,7 +38,7 @@ public:
     void setFiles(vector<string> sFile);
     int getdir (string dir);
     void printFiles();
-    int printFileContent(string fName);
+    int printFileContent();
     string removePunctuation(string word);
     int hashFunction(string wordQueue);
     void addFilestoHash();
