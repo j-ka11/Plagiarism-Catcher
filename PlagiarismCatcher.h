@@ -31,7 +31,8 @@ public:
     int printFileContent(string fName);
     string removePunctuation(string word);
     int hashFunction(string wordQueue);
-    void addFiletoHash(string fName, int n);
+    void addFilestoHash(int n);
+    void addToTable(int tableidx, int fileidx, string phrase);
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H

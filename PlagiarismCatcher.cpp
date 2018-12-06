@@ -98,6 +98,19 @@ int PlagiarismCatcher::hashFunction(string wordQueue){
     return functionIdx;
 }
 
-void PlagiarismCatcher::addFiletoHash(string fName, int n) {
+void PlagiarismCatcher::addFilestoHash(int n) {
+    string phrase;
+    for(int k = 0;k < files.size();k++) {
+        for (int i = 0; i < (wordFile.size() - n);) {
+            for (int j = 0; j < n; j++) {
+                phrase = phrase + wordFile.at(i);
+                i++;
+            }
+            addToTable(hashFunction(phrase), k, phrase);
+        }
+    }
+}
+
+void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
 
 }
