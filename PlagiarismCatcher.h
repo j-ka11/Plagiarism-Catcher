@@ -6,6 +6,7 @@
 #define LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H
 
 #include <string>
+#include <cmath>
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
@@ -18,6 +19,8 @@ class PlagiarismCatcher{
 private:
     vector<string> files;
     int breakSize;
+    string wordQueue;
+    vector<string> wordFile;
 public:
     PlagiarismCatcher();
     PlagiarismCatcher(int n);
@@ -27,6 +30,8 @@ public:
     void printFiles();
     int printFileContent(string fName);
     string removePunctuation(string word);
+    int hashFunction(string wordQueue);
+    void addFiletoHash(string fName, int n);
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H

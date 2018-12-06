@@ -70,6 +70,7 @@ int PlagiarismCatcher::printFileContent(string fName){
         string word;
         while(currentFile >> word){
             word = removePunctuation(word);
+            wordFile.push_back(word);
             cout << word << endl;
         }
         return 0;
@@ -80,7 +81,23 @@ string PlagiarismCatcher::removePunctuation(string word) {
     for(int i = 0;i < word.length();i++){
         if(((word[i] >= 33) && (word[i] <= 47)) | ((word[i] >= 58) && (word[i] <= 64)) | ((word[i] >= 91) && (word[i] <= 96)) | ((word[i] >= 123) && (word[i] <=127))){
             word.erase(word.begin() + i);
+        }else if((word[i] >= 65) && (word[i] <= 90)){
+            word[i] = word[i] + 32;
         }
     }
     return word;
+}
+
+int PlagiarismCatcher::hashFunction(string wordQueue){
+    double functionValue = 0;
+    int functionIdx;
+    for(double i = 0;i < wordQueue.size();i++){
+        functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(17, i);
+    }
+    functionIdx = (int) functionValue;
+    return functionIdx;
+}
+
+void PlagiarismCatcher::addFiletoHash(string fName, int n) {
+
 }
