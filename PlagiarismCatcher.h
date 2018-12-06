@@ -20,6 +20,7 @@ class PlagiarismCatcher{
 private:
     vector<string> files;
     int n;
+    static const int TABLE_SIZE = 136631;
     string wordQueue;
     vector<string> wordFile;
     struct Node{
@@ -29,7 +30,7 @@ private:
         Node* next;
     };
     vector<vector<int>> CollisonVector;
-    Node* HashTable[136631];
+    Node* HashTable[TABLE_SIZE];
 public:
     PlagiarismCatcher();
     PlagiarismCatcher(int n);

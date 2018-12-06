@@ -14,7 +14,7 @@ PlagiarismCatcher::PlagiarismCatcher(){
         }
     }
     //initializing hash table
-    for(int i = 0;i < 136631;i++){
+    for(int i = 0;i < TABLE_SIZE;i++){
         HashTable[i] = NULL;
     }
 }
@@ -27,13 +27,13 @@ PlagiarismCatcher::PlagiarismCatcher(int N){
         }
     }
     //initializing hash table
-    for(int i = 0;i < 136631;i++){
+    for(int i = 0;i < TABLE_SIZE;i++){
         HashTable[i] = NULL;
     }
 }
 
 PlagiarismCatcher::~PlagiarismCatcher(){
-    for(int i = 0;i < 136631;i++){
+    for(int i = 0;i < TABLE_SIZE;i++){
         deleteLinkedList(HashTable[i]);
     }
 }
@@ -133,9 +133,13 @@ int PlagiarismCatcher::printFileContent(){
 }
 
 string PlagiarismCatcher::removePunctuation(string word) {
+    if(word == "<br><br>"){
+        int stop = 0;
+    }
     for(int i = 0;i < word.length();i++){
         if(((word[i] >= 33) && (word[i] <= 47)) | ((word[i] >= 58) && (word[i] <= 64)) | ((word[i] >= 91) && (word[i] <= 96)) | ((word[i] >= 123) && (word[i] <=127))){
             word.erase(word.begin() + i);
+            i--;
         }else if((word[i] >= 65) && (word[i] <= 90)){
             word[i] = word[i] + 32;
         }
@@ -146,7 +150,7 @@ string PlagiarismCatcher::removePunctuation(string word) {
 int PlagiarismCatcher::hashFunction(string wordQueue){
     double functionValue = 0;
     unsigned long functionIdx;
-    unsigned long moddingFactor = 136631;
+    unsigned long moddingFactor = TABLE_SIZE;
     for(double i = 0;i < wordQueue.size();i++){
         functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(3, i);
     }
@@ -183,7 +187,7 @@ void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
     if(phrase == "thereisareasonabledoubtin"){
         int stop = 0;
     }
-    if((tableidx < 0) | (tableidx > 136631)){
+    if((tableidx < 0) | (tableidx > TABLE_SIZE)){
         int stop = 0;
     }
     myNode->phrase=phrase;
