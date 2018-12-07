@@ -152,14 +152,14 @@ string PlagiarismCatcher::removePunctuation(string word) {
 }
 
 int PlagiarismCatcher::hashFunction(string wordQueue) {
-    double functionValue = 0;
+    unsigned long functionValue = 0;
     unsigned long functionIdx;
     unsigned long moddingFactor = TABLE_SIZE;
-    for (double i = 0; i < wordQueue.size(); i++) {
+    for (unsigned long i = 0; i < wordQueue.size(); i++) {
         functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(2, i);
+       // functionValue=functionValue*13;
     }
-    functionIdx = (unsigned long) functionValue;
-    functionIdx = functionIdx % moddingFactor;
+    functionIdx = functionValue % moddingFactor;
     return functionIdx;
 }
 
