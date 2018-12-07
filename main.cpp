@@ -26,7 +26,11 @@ int main()
     myCatcher.printFiles();
     string fName = "bef1121.txt";
     myCatcher.printFileContent();
+    myCatcher.countCollisions();
     myCatcher.printCollisons();
+    myCatcher.recordCollisions();
+    myCatcher.sortCheaters();
+    myCatcher.printCheaters();
         return 0;
 
 }

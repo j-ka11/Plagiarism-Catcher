@@ -127,9 +127,11 @@ int PlagiarismCatcher::printFileContent() {
         while (currentFile >> word) {
             word = removePunctuation(word);
             wordFile.push_back(word);
-            cout << word << endl;
+            //cout << word << endl;
         }
         addFilestoHash(i);
+        //reinitialize wordFile
+        wordFile.clear();
     }
     return 0;
     //}
@@ -156,8 +158,7 @@ int PlagiarismCatcher::hashFunction(string wordQueue) {
     unsigned long functionIdx;
     unsigned long moddingFactor = TABLE_SIZE;
     for (unsigned long i = 0; i < wordQueue.size(); i++) {
-        functionValue = functionValue + (wordQueue[wordQueue.size() - i] - 1) * pow(2, i);
-       // functionValue=functionValue*13;
+        functionValue = functionValue + (wordQueue[wordQueue.size() - i - 1] * pow(2, i));
     }
     functionIdx = functionValue % moddingFactor;
     return functionIdx;
@@ -198,12 +199,15 @@ void PlagiarismCatcher::addToTable(int tableidx, int fileidx, string phrase) {
     myNode->next = NULL;
     Node *current = HashTable[tableidx];
     while (current != NULL) {
+        if(myNode->fileIdx == current->fileIdx){
+            return;
+        }
         if (current->next == NULL) {
             current->next = myNode;
-            CollisionVector.at(fileidx).at(current->fileIdx)++;
+            //CollisionVector.at(fileidx).at(current->fileIdx)++;
             return;
         } else {
-            CollisionVector.at(fileidx).at(current->fileIdx)++;
+            //CollisionVector.at(fileidx).at(current->fileIdx)++;
             current = current->next;
         }
     }
@@ -217,5 +221,60 @@ void PlagiarismCatcher::printCollisons() {
             cout << CollisionVector.at(i).at(j) << " ";
         }
         cout << endl;
+    }
+}
+
+void PlagiarismCatcher::countCollisions() {
+    for(int i = 0;i < TABLE_SIZE;i++){
+        Node* j = HashTable[i];
+        Node* k;
+        if(j != NULL) {
+            k = j->next;
+            while (j != NULL) {
+                while (k != NULL) {
+                    if(j->fileIdx != k->fileIdx){
+                        CollisionVector.at(j->fileIdx).at(k->fileIdx)++;
+                    }
+                    k = k->next;
+                }
+                j = j->next;
+                if(j != NULL){
+                    k = j->next;
+                }
+            }
+        }
+        //cout << "printing current collisions\n\n";
+        //printCollisons();
+    }
+}
+
+void PlagiarismCatcher::recordCollisions() {
+    collision newCollision;
+    for(int i = 0;i < CollisionVector.size();i++){
+        for(int j = (i + 1);j < CollisionVector.size();j++){
+            if(CollisionVector.at(i).at(j) >= THRESHOLD){
+                newCollision.numCollisions = CollisionVector.at(i).at(j);
+                newCollision.thisFile = files.at(i);
+                newCollision.otherFile = files.at(j);
+                myCollisions.push_back(newCollision);
+            }
+        }
+    }
+}
+
+void PlagiarismCatcher::printCheaters() {
+    for(int i = 0;i < myCollisions.size();i++){
+        cout << myCollisions.at(i).numCollisions << ": " << myCollisions.at(i).thisFile << " " << myCollisions.at(i).otherFile << endl;
+    }
+}
+
+void PlagiarismCatcher::sortCheaters() {
+    for(int i = 0;i < myCollisions.size();i++){
+        collision max = myCollisions.at(i);
+        for(int j = (i + 1);j < myCollisions.size();j++) {
+            if (myCollisions.at(j).numCollisions > max.numCollisions) {
+                iter_swap((myCollisions.begin() + i), (myCollisions.begin() + j));
+            }
+        }
     }
 }

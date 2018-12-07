@@ -21,6 +21,7 @@ private:
     vector<string> files;
     int n;
     static const int TABLE_SIZE = 500003;
+    static const int THRESHOLD = 200;
     string wordQueue;
     vector<string> wordFile;
     struct Node{
@@ -29,6 +30,12 @@ private:
         int fileIdx;
         Node* next;
     };
+    struct collision{
+        int numCollisions;
+        string thisFile;
+        string otherFile;
+    };
+    vector<collision> myCollisions;
     vector<vector<int>> CollisionVector;
     Node* HashTable[TABLE_SIZE];
 public:
@@ -47,6 +54,10 @@ public:
     int getFilesSize();
     void deleteLinkedList(Node* currentNode);
     void printCollisons();
+    void countCollisions();
+    void recordCollisions();
+    void sortCheaters();
+    void printCheaters();
 };
 
 #endif //LAB_8_PLAGIARISM_CATCHER_PLAGIARISMCATCHER_H
