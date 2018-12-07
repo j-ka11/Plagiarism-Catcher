@@ -26,10 +26,7 @@ int main()
     myCatcher.printFiles();
     string fName = "bef1121.txt";
     myCatcher.printFileContent();
-    //myCatcher.addFilestoHash();
-
-    //myCatcher.~PlagiarismCatcher();
-    //vector<string> v;
+    myCatcher.printCollisons();
         return 0;
 
 }
